@@ -1,0 +1,4 @@
+sceneSetups:
+- path: C:/Users/Public/Documents/Unity Projects/SphereFirstGame/Assets/MyWorld.unity
+  isLoaded: 1
+  isActive: 1
