@@ -1,4 +1,4 @@
 sceneSetups:
-- path: C:/Users/Public/Documents/Unity Projects/SphereFirstGame/Assets/MyWorld.unity
+- path: Assets/Scenes/Level Creation.unity
   isLoaded: 1
   isActive: 1
