@@ -1,4 +1,4 @@
-﻿/*using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 
@@ -6,59 +6,10 @@ using System.Collections;
 public class SpaceShip : MonoBehaviour
 {
 
-    public GameObject rayLandingPad1,rayLandingPad2, aircraft;
-    int count, activeCount;
-    // Use this for initialization
-    void Start()
-    {
-
-        count = 1;
-        activeCount = 0;
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-        if (count % 50 != 0)
-        {
-            count++;
-            rayLandingPad1.SetActive(false);
-            rayLandingPad2.SetActive(false);
-        }
-        else if (count % 50 == 0 || activeCount != 0)
-        {
-            activeCount++;
-            if (activeCount < 300)
-            {
-                rayLandingPad1.SetActive(true);
-                rayLandingPad2.SetActive(true);
-            }
-            else
-            {
-                Debug.Log(activeCount);
-                activeCount = 0;
-                count++;
-            }
-
-        }
-
-
-    }
-}*/
-using UnityEngine;
-using System.Collections;
-
-
-
-public class SpaceShip : MonoBehaviour
-{
-
-    public GameObject rayLandingPad1, aircraft;
+    public GameObject rayLandingPad1, aircraft, ship;
     int count, activeCount;
     private ArrayList randomLandingPadPositions;
+
 
     // Use this for initialization
     void Start()
@@ -67,7 +18,6 @@ public class SpaceShip : MonoBehaviour
         count = 0;
         activeCount = 0;
         randomLandingPadPositions = new ArrayList();
-
 
         randomLandingPadPositions.Add(new Vector3(-35, 3.5f, 0));
         randomLandingPadPositions.Add(new Vector3(37,3.5f, 0));
@@ -100,10 +50,19 @@ public class SpaceShip : MonoBehaviour
                 Debug.Log(activeCount);
                 activeCount = 0;
                 count++;
+                createShip();
             }
 
         }
 
 
     }
+
+    void createShip()
+    {
+        Debug.Log("Inside createShip");
+        GameObject newShipInstance = (GameObject)Instantiate(ship, new Vector3(-19, 5,0), Quaternion.identity);
+        newShipInstance.SetActive(true);
+    }
+
 }

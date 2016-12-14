@@ -22,7 +22,7 @@ public class ParticleSize : MonoBehaviour {
             c.radius = c.radius + 0.01f;
             count++;
   
-            Debug.Log("Particle system:"+psystem.startSize + "  " + c.radius);
+            //Debug.Log("Particle system:"+psystem.startSize + "  " + c.radius);
       
 	}
 }

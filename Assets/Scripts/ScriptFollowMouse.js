@@ -12,7 +12,9 @@ private var pointCurrent : Vector3;
 private var pointStore : Vector3; 
 private var posStoreX : Array = []; 
 private var posStoreY : Array = []; 
-private var arrayPathMarker : GameObject[] = new GameObject[1000]; 
+private var arrayPathMarker : GameObject[] = new GameObject[1000];
+private var totalScore : int;
+
 var objectPathMarker : GameObject; 
 var start : Quaternion;
 var target : Quaternion;
@@ -30,6 +32,8 @@ function Start () {
     anim = GetComponent("Animator");
     sr = GetComponent("SpriteRenderer");
     rb = GetComponent("Rigidbody2D");
+
+    totalScore = 0;
 } 
 
 function Update () { 
@@ -40,7 +44,7 @@ function Update () {
 
 		// where did the raycast hit in the world - position of rayhit 
 		if (dragging) {
-			print ("rayHit.point : " + rayHit.point + " (mousePoint)");
+			//print ("rayHit.point : " + rayHit.point + " (mousePoint)");
 		}
 		mousePoint = rayHit.point;
 		if (Input.GetMouseButtonDown(0)) { 
@@ -77,7 +81,7 @@ function OnTouchBegin (pointCurrent : Vector3) {
 function OnTouchMove (pointCurrent : Vector3) {
 
     if ((dragging) && (countDrag < 1000)) {
-	    print("countDrag " + countDrag); 
+	    //print("countDrag " + countDrag); 
         AddSplinePoint(pointCurrent); 
     } 
     else if (dragging) { 
@@ -99,7 +103,7 @@ function AddSplinePoint (pointStore : Vector3) {
     
     // show path : Instantiate and load position into array as gameObject 
     arrayPathMarker[countDrag] = Instantiate(objectPathMarker, Vector3(pointStore.x, pointStore.y,0), transform.rotation); 
-    print (arrayPathMarker[countDrag].transform.position); 
+    //print (arrayPathMarker[countDrag].transform.position); 
     
     // next position 
     countDrag ++; 
@@ -209,9 +213,11 @@ function FixedUpdate () {
    } 
    
    if (Input.GetKeyDown("r")) {
-         print ("posStoreX "+posStoreX+" : posStoreY "+posStoreY);
+         //print ("posStoreX "+posStoreX+" : posStoreY "+posStoreY);
    }
 }
+
+/*
 function OnCollisionEnter(coll : Collision) {
     if (coll.gameObject.tag =="MShip"){
         dead=true;
@@ -222,7 +228,7 @@ function OnCollisionEnter(coll : Collision) {
         anim.SetTrigger("Explode");
 
     }
-}
+}*/
 
 function OnCollisionEnter2D(coll : Collision2D) {
     if (coll.gameObject.tag == "Player") {
@@ -260,6 +266,12 @@ function OnCollisionEnter2D(coll : Collision2D) {
         anim.SetTrigger("Explode");
 
     }
+    else if(coll.gameObject.tag == "landingPad")
+    {
+        dead = true;
+        updateScore();
+        //anim.SetTrigger("Explode");
+    }
 }
 
 function Die() {
@@ -271,4 +283,25 @@ function Die() {
 function DestroyAllPathMarkers() {
     for (var i=0; i<1000; i++)
         Destroy(arrayPathMarker[i]);
+}
+
+
+/**
+Updatescore: increments the score by 1
+**/
+function updateScore()
+{
+    //motherShip.setScore( motherShipInstance.getScore + 1);
+    //GlobalClass.updateScore();
+    //Debug.Log("Updated Score : " + GlobalClass.getScore());
+
+}
+
+
+function createNewShip()
+{
+    var newInstance : GameObject;
+    var newposition : Vector3 = new Vector3 (-16,3,0);
+    newInstance = GameObject.Instantiate(gameObject, newposition, Quaternion.identity);
+    newInstance.SetActive(true);
 }
