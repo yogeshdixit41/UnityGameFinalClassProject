@@ -231,6 +231,7 @@ function OnCollisionEnter(coll : Collision) {
 }*/
 
 function OnCollisionEnter2D(coll : Collision2D) {
+    var audio: AudioSource = GetComponent.<AudioSource>();
     if (coll.gameObject.tag == "Player") {
         dead = true;
         rb.velocity = new Vector3(0,0,0);
@@ -238,6 +239,7 @@ function OnCollisionEnter2D(coll : Collision2D) {
         anim.ResetTrigger("Down");
         anim.ResetTrigger("Up");
         anim.SetTrigger("Explode");
+        audio.Play();
     }
     else if (coll.gameObject.tag == "VWall") {
         rb.velocity.x = rb.velocity.x *-1;
@@ -255,6 +257,7 @@ function OnCollisionEnter2D(coll : Collision2D) {
         anim.ResetTrigger("Down");
         anim.ResetTrigger("Up");
         anim.SetTrigger("Explode");
+        audio.Play();
 
     }
     else if (coll.gameObject.tag =="upperBorder"){
@@ -264,6 +267,7 @@ function OnCollisionEnter2D(coll : Collision2D) {
         anim.ResetTrigger("Down");
         anim.ResetTrigger("Up");
         anim.SetTrigger("Explode");
+        audio.Play();
 
     }
     else if(coll.gameObject.tag == "landingPad")
@@ -275,9 +279,10 @@ function OnCollisionEnter2D(coll : Collision2D) {
     }
 }
 
-function Die() {
+    function Die() {
+    
     DestroyAllPathMarkers();
-    yield WaitForSeconds (0.5);
+    yield WaitForSeconds (1);
     SceneManager.LoadScene(3);
     Destroy(gameObject);
 }
