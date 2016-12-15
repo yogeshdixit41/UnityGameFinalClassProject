@@ -19,7 +19,7 @@ public class SpaceShip : MonoBehaviour
         activeCount = 0;
         randomLandingPadPositions = new ArrayList();
 
-        randomLandingPadPositions.Add(new Vector3(-35, 3.5f, 0));
+        randomLandingPadPositions.Add(new Vector3(0, 3.5f, 0));
         randomLandingPadPositions.Add(new Vector3(37,3.5f, 0));
 
 
