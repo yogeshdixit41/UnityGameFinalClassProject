@@ -1,5 +1,5 @@
 #pragma strict
-
+import UnityEngine.SceneManagement;
 private var dragging : boolean = false; 
 private var moving : boolean = false; 
 private var dead : boolean = false;
@@ -268,8 +268,9 @@ function OnCollisionEnter2D(coll : Collision2D) {
     }
     else if(coll.gameObject.tag == "landingPad")
     {
-        dead = true;
         updateScore();
+        DestroyAllPathMarkers();
+        Destroy(gameObject);
         //anim.SetTrigger("Explode");
     }
 }
@@ -277,6 +278,7 @@ function OnCollisionEnter2D(coll : Collision2D) {
 function Die() {
     DestroyAllPathMarkers();
     yield WaitForSeconds (0.5);
+    SceneManager.LoadScene(3);
     Destroy(gameObject);
 }
 
