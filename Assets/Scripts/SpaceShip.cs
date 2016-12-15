@@ -6,9 +6,10 @@ using System.Collections;
 public class SpaceShip : MonoBehaviour
 {
 
-    public GameObject rayLandingPad1, aircraft, ship;
+    public GameObject rayLandingPad1, aircraft, blueShipPrefab, whiteShipPrefab;
     int count, activeCount;
-    private ArrayList randomLandingPadPositions;
+    private ArrayList randomLandingPadPositions, randomChildShipPositions;
+    bool selectBluePrefab;
 
 
     // Use this for initialization
@@ -18,9 +19,16 @@ public class SpaceShip : MonoBehaviour
         count = 0;
         activeCount = 0;
         randomLandingPadPositions = new ArrayList();
+        randomChildShipPositions = new ArrayList();
+        selectBluePrefab = true; // will select first spawned ship to be blue
 
         randomLandingPadPositions.Add(new Vector3(0, 3.5f, 0));
-        randomLandingPadPositions.Add(new Vector3(37,3.5f, 0));
+        randomLandingPadPositions.Add(new Vector3(-37,3.5f, 0));
+
+        randomChildShipPositions.Add(new Vector3(-16, -13, 0));
+        randomChildShipPositions.Add(new Vector3(-31, 5, 0));
+        randomChildShipPositions.Add(new Vector3(16, -10, 0));
+        randomChildShipPositions.Add(new Vector3(3, -13, 0));
 
 
     }
@@ -54,14 +62,28 @@ public class SpaceShip : MonoBehaviour
             }
 
         }
-
-
     }
 
     void createShip()
     {
+        GameObject newShipInstance;
+
+        Vector3 position = (Vector3)randomChildShipPositions[0];
+        randomChildShipPositions.RemoveAt(0);
+        randomChildShipPositions.Add(position);
+
         Debug.Log("Inside createShip");
-        GameObject newShipInstance = (GameObject)Instantiate(ship, new Vector3(-19, 5,0), Quaternion.identity);
+        if (selectBluePrefab)
+        {
+            newShipInstance = (GameObject)Instantiate(blueShipPrefab, position, Quaternion.identity);
+            selectBluePrefab = false;
+        }
+        else
+        {
+            newShipInstance = (GameObject)Instantiate(whiteShipPrefab, position, Quaternion.identity);
+            selectBluePrefab = true;
+        }
+        
         newShipInstance.SetActive(true);
     }
 
